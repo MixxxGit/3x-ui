@@ -1165,6 +1165,8 @@
       "externalTrafficInformEnableDesc": "إخطار واجهة API خارجية بكل تحديث لحركة المرور.",
       "externalTrafficInformURI": "مسار تنبيه الترافيك الخارجي",
       "externalTrafficInformURIDesc": "تحديثات الترافيك هتتبعت للمسار ده.",
+      "checkUniqueSubId": "التحقق من عدم تكرار subId",
+      "checkUniqueSubIdDesc": "منع إنشاء أو تعديل عميل إذا كان subId مستخدمًا بالفعل بواسطة عميل آخر.",
       "restartXrayOnClientDisable": "إعادة تشغيل Xray بعد التعطيل التلقائي",
       "restartXrayOnClientDisableDesc": "عند تعطيل العميل تلقائيا بسبب انتهاء الصلاحية أو حد حركة المرور، أعد تشغيل Xray.",
       "fragment": "تجزئة",

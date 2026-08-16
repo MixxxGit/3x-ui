@@ -125,6 +125,7 @@ var defaultValueMap = map[string]string{
 	"externalTrafficInformEnable": "false",
 	"externalTrafficInformURI":    "",
 	"restartXrayOnClientDisable":  "true",
+	"checkUniqueSubId":            "false",
 	"xrayOutboundTestUrl":         "https://www.google.com/generate_204",
 	"panelOutbound":               "",
 	"devChannelEnable":            "false",
@@ -927,6 +928,16 @@ func (s *SettingService) SetExternalTrafficInformURI(InformURI string) error {
 
 func (s *SettingService) GetRestartXrayOnClientDisable() (bool, error) {
 	return s.getBool("restartXrayOnClientDisable")
+}
+
+// GetCheckUniqueSubId reports whether the panel rejects clients that share a
+// subId; off by default so identical subIds can be assigned freely.
+func (s *SettingService) GetCheckUniqueSubId() (bool, error) {
+	return s.getBool("checkUniqueSubId")
+}
+
+func (s *SettingService) SetCheckUniqueSubId(value bool) error {
+	return s.setBool("checkUniqueSubId", value)
 }
 
 func (s *SettingService) SetRestartXrayOnClientDisable(value bool) error {

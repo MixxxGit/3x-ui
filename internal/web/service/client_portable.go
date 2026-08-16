@@ -131,7 +131,7 @@ func (s *ClientService) ImportClients(inboundSvc *InboundService, items []Client
 		if client.SubID == "" {
 			client.SubID = uuid.NewString()
 		}
-		if client.SubID != "" {
+		if client.SubID != "" && enforceUniqueSubID() {
 			var subTaken int64
 			if err := db.Model(&model.ClientRecord{}).
 				Where("sub_id = ? AND email <> ?", client.SubID, email).

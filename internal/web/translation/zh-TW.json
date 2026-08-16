@@ -1165,6 +1165,8 @@
       "externalTrafficInformEnableDesc": "每次流量更新時通知外部 API。",
       "externalTrafficInformURI": "外部流量通知 URI",
       "externalTrafficInformURIDesc": "流量更新將會傳送到此 URI",
+      "checkUniqueSubId": "檢查 subId 是否重複",
+      "checkUniqueSubIdDesc": "禁止建立或編輯 subId 已被其他用戶端使用的用戶端。",
       "restartXrayOnClientDisable": "用戶自動停用後重新啟動 Xray",
       "restartXrayOnClientDisableDesc": "當用戶因到期或流量上限而被自動停用時，重新啟動 Xray。",
       "fragment": "分片",

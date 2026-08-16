@@ -28,6 +28,9 @@
     "schemas": {
       "AllSetting": {
         "properties": {
+          "checkUniqueSubId": {
+            "type": "boolean"
+          },
           "datepicker": {
             "type": "string"
           },
@@ -370,6 +373,7 @@
           }
         },
         "required": [
+          "checkUniqueSubId",
           "datepicker",
           "expireDiff",
           "externalTrafficInformEnable",
@@ -478,6 +482,9 @@
       },
       "AllSettingView": {
         "properties": {
+          "checkUniqueSubId": {
+            "type": "boolean"
+          },
           "datepicker": {
             "type": "string"
           },
@@ -841,6 +848,7 @@
           }
         },
         "required": [
+          "checkUniqueSubId",
           "datepicker",
           "expireDiff",
           "externalTrafficInformEnable",

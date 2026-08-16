@@ -9,6 +9,7 @@ export type trafficLocalApplyAction = number;
 export type transportBits = number;
 
 export interface AllSetting {
+  checkUniqueSubId: boolean;
   datepicker: string;
   expireDiff: number;
   externalTrafficInformEnable: boolean;
@@ -115,6 +116,7 @@ export interface AllSetting {
 }
 
 export interface AllSettingView {
+  checkUniqueSubId: boolean;
   datepicker: string;
   expireDiff: number;
   externalTrafficInformEnable: boolean;

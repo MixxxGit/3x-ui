@@ -1165,6 +1165,8 @@
       "externalTrafficInformEnableDesc": "Her trafik güncellemesinde harici API'yi bilgilendirir.",
       "externalTrafficInformURI": "Harici Trafik Bilgisi URI'si",
       "externalTrafficInformURIDesc": "Trafik güncellemeleri bu URI'ye gönderilir.",
+      "checkUniqueSubId": "subId tekrarını kontrol et",
+      "checkUniqueSubIdDesc": "subId'si başka bir istemci tarafından kullanılan bir istemcinin oluşturulmasını veya düzenlenmesini reddet.",
       "restartXrayOnClientDisable": "Otomatik Devre Dışı Sonrası Xray'i Yeniden Başlat",
       "restartXrayOnClientDisableDesc": "Bir kullanıcı süre dolumu veya trafik limiti nedeniyle otomatik devre dışı bırakıldığında Xray'i yeniden başlatır.",
       "fragment": "Parçalama",

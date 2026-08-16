@@ -43,6 +43,13 @@ func validateClientSubID(subID string) error {
 	return nil
 }
 
+// enforceUniqueSubID reports whether the panel must reject clients that share
+// a subId; toggled in settings and off by default.
+func enforceUniqueSubID() bool {
+	on, err := (&SettingService{}).GetCheckUniqueSubId()
+	return err == nil && on
+}
+
 func (s *ClientService) Create(inboundSvc *InboundService, payload *ClientCreatePayload) (bool, error) {
 	if payload == nil {
 		return false, common.NewError("empty payload")
@@ -99,7 +106,7 @@ func (s *ClientService) Create(inboundSvc *InboundService, payload *ClientCreate
 		}
 	}
 
-	if client.SubID != "" {
+	if client.SubID != "" && enforceUniqueSubID() {
 		var subTaken int64
 		if err := database.GetDB().Model(&model.ClientRecord{}).
 			Where("sub_id = ? AND email <> ?", client.SubID, client.Email).
@@ -384,7 +391,7 @@ func (s *ClientService) Update(inboundSvc *InboundService, id int, updated model
 		}
 	}
 
-	if updated.SubID != existing.SubID {
+	if updated.SubID != existing.SubID && enforceUniqueSubID() {
 		var subCollision int64
 		if err := database.GetDB().Model(&model.ClientRecord{}).
 			Where("sub_id = ? AND id <> ?", updated.SubID, id).

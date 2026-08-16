@@ -91,6 +91,7 @@ type AllSetting struct {
 	ExternalTrafficInformEnable bool   `json:"externalTrafficInformEnable" form:"externalTrafficInformEnable"`
 	ExternalTrafficInformURI    string `json:"externalTrafficInformURI" form:"externalTrafficInformURI"`
 	RestartXrayOnClientDisable  bool   `json:"restartXrayOnClientDisable" form:"restartXrayOnClientDisable"`
+	CheckUniqueSubId            bool   `json:"checkUniqueSubId" form:"checkUniqueSubId"`
 	SubEncrypt                  bool   `json:"subEncrypt" form:"subEncrypt"`
 	SubURI                      string `json:"subURI" form:"subURI"`
 	SubJsonPath                 string `json:"subJsonPath" form:"subJsonPath"`

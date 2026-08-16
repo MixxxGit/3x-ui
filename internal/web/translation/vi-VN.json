@@ -1165,6 +1165,8 @@
       "externalTrafficInformEnableDesc": "Thông báo API ngoài mỗi khi cập nhật lưu lượng.",
       "externalTrafficInformURI": "URI thông báo lưu lượng truy cập bên ngoài",
       "externalTrafficInformURIDesc": "Cập nhật lưu lượng truy cập được gửi tới URI này.",
+      "checkUniqueSubId": "Kiểm tra subId trùng lặp",
+      "checkUniqueSubIdDesc": "Từ chối tạo hoặc chỉnh sửa khách hàng có subId đã được khách hàng khác sử dụng.",
       "restartXrayOnClientDisable": "Khởi Động Lại Xray Sau Khi Tự Động Vô Hiệu Hóa",
       "restartXrayOnClientDisableDesc": "Khi người dùng bị vô hiệu hóa tự động do hết hạn hoặc chạm giới hạn lưu lượng, hãy khởi động lại Xray.",
       "fragment": "Sự phân mảnh",

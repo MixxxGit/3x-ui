@@ -1165,6 +1165,8 @@
       "externalTrafficInformEnableDesc": "Повідомляти зовнішній API про кожне оновлення трафіку.",
       "externalTrafficInformURI": "Інформаційний URI зовнішнього трафіку",
       "externalTrafficInformURIDesc": "Оновлення трафіку надсилаються на цей URI.",
+      "checkUniqueSubId": "Перевіряти унікальність subId",
+      "checkUniqueSubIdDesc": "Забороняти створення або зміну клієнта, якщо його subId уже використовується іншим клієнтом.",
       "restartXrayOnClientDisable": "Перезапускати Xray після авто-вимкнення",
       "restartXrayOnClientDisableDesc": "Коли клієнт автоматично вимикається через закінчення терміну дії або ліміт трафіку, перезапускати Xray.",
       "fragment": "Фрагментація",

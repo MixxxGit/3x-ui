@@ -217,6 +217,11 @@ export default function GeneralTab({ allSetting, updateSetting }: GeneralTabProp
                 onChange={(v) => updateSetting({ restartXrayOnClientDisable: v })} />
             </SettingListItem>
 
+            <SettingListItem paddings="small" title={t('pages.settings.checkUniqueSubId')} description={t('pages.settings.checkUniqueSubIdDesc')}>
+              <Switch checked={allSetting.checkUniqueSubId}
+                onChange={(v) => updateSetting({ checkUniqueSubId: v })} />
+            </SettingListItem>
+
             <SettingListItem paddings="small" title={t('pages.settings.language')}>
               <Select
                 value={lang}

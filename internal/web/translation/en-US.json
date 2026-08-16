@@ -1286,6 +1286,8 @@
       "externalTrafficInformEnableDesc": "Inform external API on every traffic update.",
       "externalTrafficInformURI": "External Traffic Inform URI",
       "externalTrafficInformURIDesc": "Traffic updates are sent to this URI.",
+      "checkUniqueSubId": "Check for duplicate subId",
+      "checkUniqueSubIdDesc": "Reject creating or editing a client whose subId is already used by another client.",
       "restartXrayOnClientDisable": "Restart Xray After Auto Disable",
       "restartXrayOnClientDisableDesc": "When a client is automatically disabled due to expiration or traffic limit, restart Xray.",
       "fragment": "Fragmentation",
