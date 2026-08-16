@@ -23,6 +23,20 @@ Built as an enhanced fork of the original X-UI project, 3X-UI adds broader proto
 > [!IMPORTANT]
 > This project is intended for personal use only. Please do not use it for illegal purposes or in a production environment.
 
+## Why this fork
+
+Upstream 3X-UI shipped a hard restriction: assigning the same `subId` to two
+clients fails with a `Duplicate subId` error and no way to opt out. This fork
+fixes that quirk and restores the original freedom:
+
+- **"Check unique subId"** (Settings → Subscription → Panel) — **off by
+  default**, so identical subIds can be assigned freely again. Turn it on if
+  you want the upstream-style duplicate check.
+- **"Show identity on every link"** — now **enabled by default**, so every
+  subscription link is named `inboundName-email` instead of only the first one.
+
+Everything else is stock 3X-UI.
+
 ## Features
 
 - **Multi-protocol inbounds** — VLESS, VMess, Trojan, Shadowsocks, WireGuard, Hysteria2, HTTP, SOCKS (Mixed), Dokodemo-door / Tunnel, and TUN.

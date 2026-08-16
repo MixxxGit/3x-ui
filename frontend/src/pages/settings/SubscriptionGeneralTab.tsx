@@ -72,6 +72,10 @@ export default function SubscriptionGeneralTab({ allSetting, updateSetting }: Su
               <Input value={allSetting.subURI} placeholder="(http|https)://domain[:port]/path/"
                 onChange={(e) => updateSetting({ subURI: e.target.value })} />
             </SettingListItem>
+            <SettingListItem paddings="small" title={t('pages.settings.checkUniqueSubId')} description={t('pages.settings.checkUniqueSubIdDesc')}>
+              <Switch checked={allSetting.checkUniqueSubId}
+                onChange={(v) => updateSetting({ checkUniqueSubId: v })} />
+            </SettingListItem>
           </>
         ),
       },
