@@ -99,6 +99,7 @@ type subControllerConfig struct {
 	subJsonMux            string
 	subJsonRules          string
 	subJsonFinalMask      string
+	subJsonObservatory    string
 	subClashEnableRouting bool
 	subClashRules         string
 
@@ -180,6 +181,10 @@ func WithSUBJsonFinalMask(value string) SUBControllerOption {
 	return func(config *subControllerConfig) { config.subJsonFinalMask = value }
 }
 
+func WithSUBJsonObservatory(value string) SUBControllerOption {
+	return func(config *subControllerConfig) { config.subJsonObservatory = value }
+}
+
 func WithSUBClashEnableRouting(value bool) SUBControllerOption {
 	return func(config *subControllerConfig) { config.subClashEnableRouting = value }
 }
@@ -243,6 +248,8 @@ func NewSUBController(g *gin.RouterGroup, options ...SUBControllerOption) *SUBCo
 	}
 
 	sub := NewSubService(config.remarkTemplate)
+	subJsonSvc := NewSubJsonService(config.subJsonMux, config.subJsonRules, config.subJsonFinalMask, sub)
+	subJsonSvc.SetObservatoryConfig(config.subJsonObservatory)
 	a := &SUBController{
 		subTitle:         config.subTitle,
 		subSupportUrl:    config.subSupportURL,
@@ -269,7 +276,7 @@ func NewSUBController(g *gin.RouterGroup, options ...SUBControllerOption) *SUBCo
 		updateInterval:     config.updateInterval,
 
 		subService:      sub,
-		subJsonService:  NewSubJsonService(config.subJsonMux, config.subJsonRules, config.subJsonFinalMask, sub),
+		subJsonService:  subJsonSvc,
 		subClashService: NewSubClashService(config.subClashEnableRouting, config.subClashRules, sub),
 
 		subTemplateCache: map[string]*cachedSubTemplate{},
@@ -422,8 +429,11 @@ func (a *SUBController) subs(c *gin.Context) {
 		a.ApplyCommonHeaders(c, header, a.updateInterval, metadata.Title, metadata.SupportURL, metadata.ProfileURL, metadata.Announce, a.subEnableRouting, a.subRoutingRules, a.subHideSettings)
 
 		if a.subIncyEnableRouting && a.subIncyRoutingRules != "" {
-			result.WriteString(a.subIncyRoutingRules)
-			result.WriteString("\n")
+			incyRules, _, err := resolveIncyRoutingSource(a.subIncyRoutingRules)
+			if err == nil && strings.TrimSpace(incyRules) != "" {
+				result.WriteString(incyRules)
+				result.WriteString("\n")
+			}
 		}
 
 		if a.subEncrypt {
@@ -828,12 +838,14 @@ func (a *SUBController) ApplyCommonHeaders(
 		c.Writer.Header().Set("Announce", "base64:"+base64.StdEncoding.EncodeToString([]byte(profileAnnounce)))
 	}
 
-	// Advanced (Happ)
+	// Advanced (Happ). Routing stays independent of the enable flag; remote
+	// values come only from the validated cache and never delay this response.
+	rules, remote, routingErr := resolveRoutingSource(remoteRoutingHapp, profileRoutingRules)
 	if profileEnableRouting {
 		c.Writer.Header().Set("Routing-Enable", "true")
 	}
-	if profileRoutingRules != "" {
-		c.Writer.Header().Set("Routing", profileRoutingRules)
+	if (routingErr == nil || !remote) && strings.TrimSpace(rules) != "" {
+		c.Writer.Header().Set("Routing", rules)
 	}
 	if profileHideSettings {
 		c.Writer.Header().Set("Hide-Settings", "1")

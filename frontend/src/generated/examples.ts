@@ -6,6 +6,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "expireDiff": 0,
     "externalTrafficInformEnable": false,
     "externalTrafficInformURI": "",
+    "ipLimitAllowlist": "",
     "ldapAutoCreate": false,
     "ldapAutoDelete": false,
     "ldapBaseDN": "",
@@ -66,6 +67,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "subJsonEnable": false,
     "subJsonFinalMask": "",
     "subJsonMux": "",
+    "subJsonObservatory": "",
     "subJsonPath": "",
     "subJsonRules": "",
     "subJsonURI": "",
@@ -119,6 +121,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "hasTgBotToken": false,
     "hasTwoFactorToken": false,
     "hasWarpSecret": false,
+    "ipLimitAllowlist": "",
     "ldapAutoCreate": false,
     "ldapAutoDelete": false,
     "ldapBaseDN": "",
@@ -179,6 +182,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "subJsonEnable": false,
     "subJsonFinalMask": "",
     "subJsonMux": "",
+    "subJsonObservatory": "",
     "subJsonPath": "",
     "subJsonRules": "",
     "subJsonURI": "",
@@ -219,6 +223,26 @@ export const EXAMPLES: Record<string, unknown> = {
     "webListen": "",
     "webPort": 1
   },
+  "AmneziaWGLogs": {
+    "events": [
+      "2025/01/01 12:00:00 amneziawg: started interface awg1 for inbound 1"
+    ],
+    "peers": [
+      {
+        "allowedIPs": "10.8.1.2/32",
+        "down": 4194304,
+        "email": "peer@example.com",
+        "endpoint": "203.0.113.9:51820",
+        "handshake": 1735732800000,
+        "inboundId": 1,
+        "interface": "awg1",
+        "online": true,
+        "tag": "inbound-51820",
+        "up": 1048576
+      }
+    ],
+    "running": true
+  },
   "ApiToken": {
     "createdAt": 0,
     "enabled": false,
@@ -242,6 +266,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "allowedIPs": [
       ""
     ],
+    "allowedIPsByInbound": {},
     "auth": "",
     "comment": "",
     "created_at": 0,
@@ -249,6 +274,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "enable": false,
     "expiryTime": 0,
     "flow": "",
+    "forwardedPorts": "",
     "group": "",
     "id": "",
     "keepAlive": 0,
@@ -258,12 +284,16 @@ export const EXAMPLES: Record<string, unknown> = {
     "privateKey": "",
     "publicKey": "",
     "reset": 0,
+    "resetDay": 0,
+    "resetMax": 0,
     "reverse": null,
     "secret": "ee1234567890abcdef1234567890abcd7777772e636c6f7564666c6172652e636f6d",
     "security": "",
     "subId": "",
     "tgId": 0,
     "totalGB": 0,
+    "trafficReset": "never",
+    "trafficResetDay": 1,
     "updated_at": 0
   },
   "ClientInbound": {
@@ -282,6 +312,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "enable": false,
     "expiryTime": 0,
     "flow": "",
+    "forwardedPorts": "",
     "group": "",
     "id": 0,
     "keepAlive": 0,
@@ -292,12 +323,16 @@ export const EXAMPLES: Record<string, unknown> = {
     "privateKey": "",
     "publicKey": "",
     "reset": 0,
+    "resetDay": 0,
+    "resetMax": 0,
     "reverse": null,
     "secret": "",
     "security": "",
     "subId": "",
     "tgId": 0,
     "totalGB": 0,
+    "trafficReset": "",
+    "trafficResetDay": 0,
     "updatedAt": 0,
     "uuid": ""
   },
@@ -314,6 +349,9 @@ export const EXAMPLES: Record<string, unknown> = {
     "lastOnline": 1735680000000,
     "lastSubFetch": 1735680000000,
     "reset": 0,
+    "resetCount": 0,
+    "resetDay": 0,
+    "resetMax": 0,
     "subId": "i7tvdpeffi0hvvf1",
     "total": 10737418240,
     "up": 1048576,
@@ -480,6 +518,9 @@ export const EXAMPLES: Record<string, unknown> = {
         "lastOnline": 1735680000000,
         "lastSubFetch": 1735680000000,
         "reset": 0,
+        "resetCount": 0,
+        "resetDay": 0,
+        "resetMax": 0,
         "subId": "i7tvdpeffi0hvvf1",
         "total": 10737418240,
         "up": 1048576,
@@ -528,6 +569,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "xver": 0
   },
   "InboundOption": {
+    "awgServer": null,
     "enable": true,
     "id": 1,
     "listen": "",
@@ -673,6 +715,18 @@ export const EXAMPLES: Record<string, unknown> = {
     "runId": "1735689600123456789",
     "state": "success"
   },
+  "PeerActivity": {
+    "allowedIPs": "10.8.1.2/32",
+    "down": 4194304,
+    "email": "peer@example.com",
+    "endpoint": "203.0.113.9:51820",
+    "handshake": 1735732800000,
+    "inboundId": 1,
+    "interface": "awg1",
+    "online": true,
+    "tag": "inbound-51820",
+    "up": 1048576
+  },
   "ProbeResultUI": {
     "cpuPct": 12.5,
     "error": "",
@@ -687,6 +741,7 @@ export const EXAMPLES: Record<string, unknown> = {
   },
   "RealityScanResult": {
     "alpn": "h2",
+    "certChainValid": true,
     "certIssuer": "Google Trust Services",
     "certSubject": "cloudflare.com",
     "certValid": true,
@@ -698,6 +753,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "latencyMs": 180,
     "notAfter": "2026-08-01T00:00:00Z",
     "port": 443,
+    "privateTarget": false,
     "reason": "",
     "serverNames": [
       ""
@@ -707,10 +763,62 @@ export const EXAMPLES: Record<string, unknown> = {
     "tlsVersion": "1.3",
     "x25519": true
   },
+  "ServerSettings": {
+    "contentPaddingAddition": "",
+    "disableCookies": false,
+    "externalInterface": "",
+    "h1": "",
+    "h2": "",
+    "h3": "",
+    "h4": "",
+    "headerProtectionKey": "",
+    "i1": "",
+    "i2": "",
+    "i3": "",
+    "i4": "",
+    "i5": "",
+    "ipv6Enabled": false,
+    "ipv6ExternalInterface": "",
+    "ipv6Subnet": "",
+    "jc": 0,
+    "jmax": 0,
+    "jmin": 0,
+    "keepaliveTimeout": "",
+    "maxHandshakeAttempts": "",
+    "mtu": 0,
+    "primaryDns": "",
+    "privateKey": "",
+    "publicKey": "",
+    "randomTrailers": false,
+    "rejectAfterTime": "",
+    "rekeyAfterTime": "",
+    "rekeyTimeout": "",
+    "routeThroughXray": false,
+    "s1": 0,
+    "s2": 0,
+    "s3": 0,
+    "s4": 0,
+    "secondaryDns": "",
+    "subnetCidr": 0,
+    "subnetIp": ""
+  },
   "Setting": {
     "id": 0,
     "key": "",
     "value": ""
+  },
+  "SubBalancer": {
+    "createdAt": 1710000000000,
+    "enabled": true,
+    "id": 1,
+    "inboundIds": [
+      1,
+      3
+    ],
+    "remark": "auto-fastest",
+    "sortOrder": 1,
+    "strategy": "random",
+    "updatedAt": 1710000000000
   },
   "User": {
     "id": 0,
