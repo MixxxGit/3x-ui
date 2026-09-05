@@ -46,6 +46,10 @@ jobs:
         env:
           DEPLOY_TARGET: static
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+          # Pages project sites are served from /<repo>/, so every route and
+          # asset URL needs this prefix or the browser fetches them from the
+          # domain root and 404s (no CSS, oversized icons, dead links).
+          NEXT_PUBLIC_BASE_PATH: /3x-ui
         run: pnpm build
       - name: Mirror default locale (en) to the site root
         # hideLocale makes most English links unprefixed (/, /docs/...), but the
