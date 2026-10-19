@@ -7,6 +7,10 @@ on:
   push:
     branches:
       - main
+    # Version tags ship the stable release binaries (Upload steps are gated
+    # on refs/tags/*); path filters do not apply to tag pushes.
+    tags:
+      - "v*"
     paths:
       - "**.go"
       - "go.mod"
