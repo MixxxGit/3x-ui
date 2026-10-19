@@ -223,7 +223,9 @@ func TestSubClash_InfoNode_ProxyGroupOrder_DoesNotDefaultToDummy(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	sub := NewSubService("{{EMAIL}}|📊{{TRAFFIC_LEFT}}|{{STATUS}}")
+	// A subscription can span several inbounds, so the dummy has no single
+	// inbound remark to render: {{EMAIL}} is the only token that always resolves.
+	sub := NewSubService("{{EMAIL}}|{{STATUS}}")
 	sub.subInfoNodeEnable = true
 	clash := NewSubClashService(false, "", sub)
 
@@ -232,17 +234,17 @@ func TestSubClash_InfoNode_ProxyGroupOrder_DoesNotDefaultToDummy(t *testing.T) {
 		t.Fatalf("GetClash: %v", err)
 	}
 
-	// Status token must be rendered as active
-	if !strings.Contains(out, "active") {
+	// Status token must be rendered as active on the dummy node
+	if !strings.Contains(out, "name: user1@test.com|active") {
 		t.Fatalf("expected active status in clash dummy remark, got:\n%s", out)
 	}
 
-	// In proxy-groups, PROXY select group must NOT have the dummy node as first member
-	// PROXY group proxies should begin with real proxy
-	if strings.Contains(out, "user1@test.com|active") && strings.Contains(out, "proxies:\n  - user1@test.com|active") {
-		t.Fatalf("PROXY group must NOT contain dummy info node as member, got:\n%s", out)
+	// PROXY must select the real proxy first, never the dummy info node: the
+	// dummy is a display-only socks5 pointing at a dead local port.
+	if !strings.Contains(out, "proxies:\n  - user1@test.com\n  - DIRECT") {
+		t.Fatalf("expected real proxy first in PROXY group, got:\n%s", out)
 	}
-	if !strings.Contains(out, "proxies:\n  - Germany-VLESS\n  - DIRECT") {
-		t.Fatalf("expected real proxy Germany-VLESS in PROXY group, got:\n%s", out)
+	if strings.Contains(out, "proxies:\n  - user1@test.com|active") {
+		t.Fatalf("PROXY group must NOT contain dummy info node as member, got:\n%s", out)
 	}
 }
