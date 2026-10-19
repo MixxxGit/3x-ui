@@ -2,6 +2,9 @@
 export const SCHEMAS: Record<string, unknown> = {
   "AllSetting": {
     "properties": {
+      "checkUniqueSubId": {
+        "type": "boolean"
+      },
       "datepicker": {
         "type": "string"
       },
@@ -572,6 +575,7 @@ export const SCHEMAS: Record<string, unknown> = {
       }
     },
     "required": [
+      "checkUniqueSubId",
       "datepicker",
       "discordAdminIds",
       "discordBotBackup",
@@ -754,6 +758,9 @@ export const SCHEMAS: Record<string, unknown> = {
   },
   "AllSettingView": {
     "properties": {
+      "checkUniqueSubId": {
+        "type": "boolean"
+      },
       "datepicker": {
         "type": "string"
       },
@@ -1348,6 +1355,7 @@ export const SCHEMAS: Record<string, unknown> = {
       }
     },
     "required": [
+      "checkUniqueSubId",
       "datepicker",
       "discordAdminIds",
       "discordBotBackup",

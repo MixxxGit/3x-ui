@@ -1347,12 +1347,14 @@ func (s *ClientService) bulkCreate(inboundSvc *InboundService, payloads []Client
 			skip(email, "email already in use: "+email)
 			continue
 		}
-		if owner, ok := seenSubID[client.SubID]; ok && owner != le {
-			skip(email, "subId already in use: "+client.SubID)
-			continue
+		if enforceUniqueSubID() {
+			if owner, ok := seenSubID[client.SubID]; ok && owner != le {
+				skip(email, "subId already in use: "+client.SubID)
+				continue
+			}
+			seenSubID[client.SubID] = le
 		}
 		seenEmail[le] = struct{}{}
-		seenSubID[client.SubID] = le
 
 		prep = append(prep, prepared{client: client, inboundIds: payloads[i].InboundIds, limitHwid: payloads[i].LimitHwid, payloadIdx: i})
 		emails = append(emails, email)
@@ -1430,10 +1432,12 @@ func (s *ClientService) bulkCreate(inboundSvc *InboundService, payloads []Client
 				prep[idx].client.Secret = rec.Secret
 			}
 		}
-		if owner, ok := existingSubOwner[prep[idx].client.SubID]; ok && owner != le {
-			failed[idx] = true
-			reason[idx] = "subId already in use: " + prep[idx].client.SubID
-			continue
+		if enforceUniqueSubID() {
+			if owner, ok := existingSubOwner[prep[idx].client.SubID]; ok && owner != le {
+				failed[idx] = true
+				reason[idx] = "subId already in use: " + prep[idx].client.SubID
+				continue
+			}
 		}
 
 		ok := true

@@ -28,6 +28,9 @@
     "schemas": {
       "AllSetting": {
         "properties": {
+          "checkUniqueSubId": {
+            "type": "boolean"
+          },
           "datepicker": {
             "type": "string"
           },
@@ -598,6 +601,7 @@
           }
         },
         "required": [
+          "checkUniqueSubId",
           "datepicker",
           "discordAdminIds",
           "discordBotBackup",
@@ -780,6 +784,9 @@
       },
       "AllSettingView": {
         "properties": {
+          "checkUniqueSubId": {
+            "type": "boolean"
+          },
           "datepicker": {
             "type": "string"
           },
@@ -1374,6 +1381,7 @@
           }
         },
         "required": [
+          "checkUniqueSubId",
           "datepicker",
           "discordAdminIds",
           "discordBotBackup",

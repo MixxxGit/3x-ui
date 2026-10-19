@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/mhsanaei/3x-ui/v3/internal/database"
@@ -117,6 +118,9 @@ func TestClientUpdateDuplicateSubIDDoesNotRenameEmail(t *testing.T) {
 	setupBulkDB(t)
 	svc := &ClientService{}
 	inboundSvc := &InboundService{}
+	if err := (&SettingService{}).SetCheckUniqueSubId(true); err != nil {
+		t.Fatalf("enable unique subId check: %v", err)
+	}
 
 	source := []model.Client{
 		{Email: "keep@x", ID: "aaaaaaaa-0000-0000-0000-000000000003", SubID: "sub-keep", Enable: true},
@@ -142,6 +146,42 @@ func TestClientUpdateDuplicateSubIDDoesNotRenameEmail(t *testing.T) {
 	}
 	if got := mustInboundSettings(t, inboundSvc, ib.Id); got != origSettings {
 		t.Fatalf("inbound settings changed after rejected update")
+	}
+}
+
+// With the unique-subId check off by default, reassigning a subId that another
+// client already holds must succeed instead of erroring (#5596-style complaint).
+func TestClientUpdateDuplicateSubIDAllowedByDefault(t *testing.T) {
+	setupBulkDB(t)
+	svc := &ClientService{}
+	inboundSvc := &InboundService{}
+
+	source := []model.Client{
+		{Email: "keep@x", ID: "aaaaaaaa-0000-0000-0000-00000000000a", SubID: "sub-keep", Enable: true},
+		{Email: "other@x", ID: "aaaaaaaa-0000-0000-0000-00000000000b", SubID: "sub-other", Enable: true},
+	}
+	ib := mkInbound(t, 22005, model.VLESS, clientsSettings(t, source))
+	if err := svc.SyncInbound(nil, ib.Id, source); err != nil {
+		t.Fatalf("seed linkage: %v", err)
+	}
+	origId := lookupClientRecord(t, "keep@x").Id
+
+	updated := source[0]
+	updated.Email = "kept@x"
+	updated.SubID = "sub-other"
+	if _, err := svc.Update(inboundSvc, origId, updated, 0); err != nil {
+		t.Fatalf("Update with colliding subId should succeed by default: %v", err)
+	}
+
+	rec := lookupClientRecord(t, "kept@x")
+	if rec.Id != origId {
+		t.Fatalf("record id after accepted update = %d, want %d", rec.Id, origId)
+	}
+	if rec.SubID != "sub-other" {
+		t.Fatalf("record subId after accepted update = %q, want %q", rec.SubID, "sub-other")
+	}
+	if got := mustInboundSettings(t, inboundSvc, ib.Id); !strings.Contains(got, "sub-other") {
+		t.Fatalf("inbound settings lost the shared subId after accepted update")
 	}
 }
 

@@ -9,6 +9,7 @@ export type trafficLocalApplyAction = number;
 export type transportBits = number;
 
 export interface AllSetting {
+  checkUniqueSubId: boolean;
   datepicker: string;
   discordAdminIds: string;
   discordBotBackup: boolean;
@@ -189,6 +190,7 @@ export interface AllSetting {
 }
 
 export interface AllSettingView {
+  checkUniqueSubId: boolean;
   datepicker: string;
   discordAdminIds: string;
   discordBotBackup: boolean;

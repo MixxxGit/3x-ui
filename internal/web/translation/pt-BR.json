@@ -1327,6 +1327,8 @@
       "externalTrafficInformURIDesc": "As atualizações de tráfego são enviadas para este URI.",
       "restartXrayOnClientDisable": "Reiniciar Xray Após Desativar um Cliente",
       "restartXrayOnClientDisableDesc": "Quando um cliente deixa de ser atendido — desativado automaticamente por expiração ou limite de tráfego, ou desativado ou excluído manualmente — reinicie o Xray para encerrar suas conexões ativas.",
+      "checkUniqueSubId": "Verificar subId duplicado",
+      "checkUniqueSubIdDesc": "Rejeitar a criação ou edição de um cliente cujo subId já esteja em uso por outro cliente.",
       "fragment": "Fragmentação",
       "fragmentDesc": "Ativa a fragmentação para o pacote TLS hello.",
       "fragmentSett": "Configurações de Fragmentação",

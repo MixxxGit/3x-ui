@@ -1327,6 +1327,8 @@
       "externalTrafficInformURIDesc": "Trafik güncellemeleri bu URI'ye gönderilir.",
       "restartXrayOnClientDisable": "İstemci Devre Dışı Bırakıldığında Xray'i Yeniden Başlat",
       "restartXrayOnClientDisableDesc": "Bir istemci artık sunulmadığında — süre dolumu veya trafik limiti nedeniyle otomatik, ya da elle devre dışı bırakıldığında veya silindiğinde — açık bağlantıları bitsin diye Xray'i yeniden başlatır.",
+      "checkUniqueSubId": "subId tekrarını kontrol et",
+      "checkUniqueSubIdDesc": "subId'si başka bir istemci tarafından kullanılan bir istemcinin oluşturulmasını veya düzenlenmesini reddet.",
       "fragment": "Parçalama",
       "fragmentDesc": "TLS merhaba paketinin parçalanmasını etkinleştirir.",
       "fragmentSett": "Parçalama Ayarları",
