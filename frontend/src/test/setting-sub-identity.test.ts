@@ -3,8 +3,8 @@ import { AllSettingSchema } from '@/schemas/setting';
 import { AllSetting } from '@/models/setting';
 
 describe('subShowIdentityOnAllLinks', () => {
-  it('defaults to false on AllSetting', () => {
-    expect(new AllSetting().subShowIdentityOnAllLinks).toBe(false);
+  it('defaults to true on AllSetting', () => {
+    expect(new AllSetting().subShowIdentityOnAllLinks).toBe(true);
   });
 
   it('accepts boolean values in the settings schema', () => {

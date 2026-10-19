@@ -81,7 +81,7 @@ var defaultValueMap = map[string]string{
 	"expireDiff":                  "0",
 	"trafficDiff":                 "0",
 	"remarkTemplate":              DefaultRemarkTemplate,
-	"subShowIdentityOnAllLinks":   "false",
+	"subShowIdentityOnAllLinks":   "true",
 	"subInfoNodeEnable":           "false",
 	"subCalendarExpireInclusive":  "false",
 	"subExpiredTemplate":          DefaultSubExpiredTemplate,
