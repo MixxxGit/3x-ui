@@ -141,10 +141,13 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           file: x-ui-linux-amd64.tar.gz*
           file_glob: true
           overwrite: true
-          prerelease: true
+          # A v* tag is the stable channel: mark it latest, never a prerelease.
+          prerelease: false
+          make_latest: true
 
   # =================================
   #  Rolling dev channel (per-commit)
