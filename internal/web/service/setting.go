@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"reflect"
 	"regexp"
@@ -1682,6 +1683,7 @@ func (s *SettingService) UpdateAllSetting(allSetting *entity.AllSetting, clears 
 	if err := allSetting.CheckValid(); err != nil {
 		return err
 	}
+	s.realignDerivedSubURIs(allSetting)
 
 	v := reflect.ValueOf(allSetting).Elem()
 	t := reflect.TypeFor[entity.AllSetting]()
@@ -1717,6 +1719,58 @@ func (s *SettingService) UpdateAllSetting(allSetting *entity.AllSetting, clears 
 		}
 		return nil
 	})
+}
+
+// realignDerivedSubURIs moves a stored subscription base URL onto the path its
+// service now serves when the panel itself derived that URL. The settings page
+// saves every field it displays, so a value the panel derived from subPath gets
+// stored as if typed; renaming the path afterwards left every generated link on
+// the old path and the sub server answered 404. A URI naming a path this panel
+// never served is an admin's reverse-proxy rewrite and is left alone.
+func (s *SettingService) realignDerivedSubURIs(allSetting *entity.AllSetting) {
+	for _, svc := range []struct {
+		uri     *string
+		pathKey string
+		path    string
+	}{
+		{&allSetting.SubURI, "subPath", allSetting.SubPath},
+		{&allSetting.SubJsonURI, "subJsonPath", allSetting.SubJsonPath},
+		{&allSetting.SubClashURI, "subClashPath", allSetting.SubClashPath},
+	} {
+		if strings.TrimSpace(*svc.uri) == "" {
+			continue
+		}
+		stored, err := s.getString(svc.pathKey)
+		if err != nil {
+			// No previous value to compare against: the derived path is unknown,
+			// so the stored URL can only be an explicit override.
+			continue
+		}
+		if !uriPathIs(*svc.uri, stored) {
+			continue
+		}
+		*svc.uri = rebaseURIPath(*svc.uri, svc.path)
+	}
+}
+
+// uriPathIs reports whether uri's path is exactly path (trailing slash aside).
+func uriPathIs(uri, path string) bool {
+	parsed, err := url.Parse(strings.TrimSpace(uri))
+	if err != nil || parsed.Host == "" {
+		return false
+	}
+	return strings.TrimRight(parsed.Path, "/") == strings.TrimRight(path, "/")
+}
+
+// rebaseURIPath swaps a URI's path, keeping the scheme, host and port the
+// subscription is actually reached on.
+func rebaseURIPath(uri, path string) string {
+	parsed, err := url.Parse(strings.TrimSpace(uri))
+	if err != nil || parsed.Scheme == "" || parsed.Host == "" {
+		return uri
+	}
+	parsed.Path = path
+	return parsed.String()
 }
 
 func validateSubUserAgentRegexes(allSetting *entity.AllSetting) error {
