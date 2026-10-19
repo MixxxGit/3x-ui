@@ -212,7 +212,7 @@ Reusable components in `src/components/` are developed and documented in
 **Storybook** (`@storybook/react-vite`). It is a component workbench, not part
 of the shipped panel — nothing here is embedded into the Go binary. The built
 Storybook is published with the docs site at
-[docs.sanaei.dev/storybook](https://docs.sanaei.dev/storybook/) by
+[mixxxgit.github.io/3x-ui/storybook](https://mixxxgit.github.io/3x-ui/storybook/) by
 `.github/workflows/docs-deploy.yml`.
 
 ```sh

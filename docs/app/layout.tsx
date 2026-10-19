@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' });
 // Persian UI font; covers Arabic + Latin glyphs so mixed content renders well.
 const vazirmatn = Vazirmatn({ subsets: ['arabic'], display: 'swap' });
 
+// Set when the site is served from a subpath (GitHub Pages project site). Next
+// prefixes its own routes and _next assets, but not hardcoded public/ paths.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 // Global SEO defaults and document shell. Locale-aware html attributes are
 // computed from route params so RTL locales get a correct base direction.
 export const metadata: Metadata = {
@@ -27,8 +31,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
   icons: {
-    icon: '/favicon.png',
-    apple: '/icon.png',
+    icon: `${basePath}/favicon.png`,
+    apple: `${basePath}/icon.png`,
   },
 };
 
